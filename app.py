@@ -4,6 +4,16 @@ import google.generativeai as genai
 # 1. Configuração visual da página
 st.set_page_config(page_title="Assistente de Extensão", page_icon="🎓")
 st.title("🎓 Assistente Virtual - Setor de Estágios")
+# Esconder o menu do Streamlit e o ícone do GitHub
+esconder_menu = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+[data-testid="stToolbar"] {visibility: hidden;}
+</style>
+"""
+st.markdown(esconder_menu, unsafe_allow_html=True)
 st.write("Olá! Sou o assistente de estágios. Pergunte-me sobre editais, regulamentos, o que tiver dúvida sobre o setor.")
 
 # 2. Conectando a IA com a chave de segurança
