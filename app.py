@@ -3,8 +3,8 @@ import google.generativeai as genai
 
 # 1. Configuração visual da página
 st.set_page_config(page_title="Assistente de Extensão", page_icon="🎓")
-st.title("🎓 Assistente Virtual - Setor de Estágios")
-# Esconder o menu do Streamlit e o ícone do GitHub
+
+# Esconder o menu do Streamlit, o cabeçalho e o ícone do GitHub
 esconder_menu = """
 <style>
 #MainMenu {visibility: hidden;}
@@ -14,35 +14,36 @@ header {visibility: hidden;}
 </style>
 """
 st.markdown(esconder_menu, unsafe_allow_html=True)
-st.write("Olá! Sou o assistente de estágios. Pergunte-me sobre editais, regulamentos, o que tiver dúvida sobre o setor.")
+
+st.title("🎓 Assistente Virtual - Setor de Extensão")
+st.write("Olá! Sou o assistente da extensão. Pergunta-me sobre editais, horas e regulamentos.")
 
 # 2. Conectando a IA com a chave de segurança
-# O Streamlit vai buscar a sua chave escondida nas configurações dele
 try:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-except:
-    st.error("Chave de API não configurada.")
+except Exception as e:
+    st.error("Chave de API não configurada corretamente nos Secrets.")
 
-# 3. Lendo o seu regulamento
+# 3. Lendo o vosso regulamento
 @st.cache_data
 def carregar_documento():
     try:
         with open("regulamento.txt", "r", encoding="utf-8") as file:
             return file.read()
-    except:
+    except Exception as e:
         return "Erro: Arquivo regulamento.txt não encontrado."
 
 documento = carregar_documento()
 
 # 4. Configurando as regras da IA (A restrição para não alucinar)
 modelo = genai.GenerativeModel(
-    model_name="gemini-1.5-flash-latest",
+    model_name="models/gemini-1.5-flash",
     system_instruction=f"""Você é o assistente oficial do Setor de Extensão da Universidade. 
     Responda as dúvidas dos alunos baseando-se ESTRITAMENTE e APENAS no seguinte texto:
     ---
     {documento}
     ---
-    Se a resposta não estiver no texto acima, diga exatamente: 'Desculpe, não encontrei essa informação no regulamento. Por favor, entre em contato direto com a secretaria de estágio.'"""
+    Se a resposta não estiver no texto acima, diga exatamente: 'Desculpe, não encontrei essa informação no regulamento. Por favor, entre em contato direto com a secretaria.'"""
 )
 
 # 5. Criando a memória do chat
@@ -64,6 +65,9 @@ if pergunta:
 
     # Pede a resposta para o Gemini e mostra na tela
     with st.chat_message("assistant"):
-        resposta = modelo.generate_content(pergunta)
-        st.markdown(resposta.text)
-    st.session_state.mensagens.append({"role": "assistant", "content": resposta.text})
+        try:
+            resposta = modelo.generate_content(pergunta)
+            st.markdown(resposta.text)
+            st.session_state.mensagens.append({"role": "assistant", "content": resposta.text})
+        except Exception as e:
+            st.error(f"Ocorreu um erro ao processar a resposta. Por favor, tente novamente em alguns segundos.")
