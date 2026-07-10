@@ -36,7 +36,7 @@ documento = carregar_documento()
 
 # 4. Configurando as regras da IA (A restrição para não alucinar)
 modelo = genai.GenerativeModel(
-    mmodel_name="gemini-1.5-flash-latest",
+    model_name="gemini-1.5-flash-latest",
     system_instruction=f"""Você é o assistente oficial do Setor de Extensão da Universidade. 
     Responda as dúvidas dos alunos baseando-se ESTRITAMENTE e APENAS no seguinte texto:
     ---
