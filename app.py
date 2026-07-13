@@ -3,7 +3,7 @@ import google.generativeai as genai
 import PyPDF2
 
 # 1. Configuração visual da página
-st.set_page_config(page_title="Assistente de Extensão", page_icon="🎓")
+st.set_page_config(page_title="Assistente de Estágios", page_icon="🎓")
 
 # Esconder o menu do Streamlit, o cabeçalho e o ícone do GitHub
 esconder_menu = """
