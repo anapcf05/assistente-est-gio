@@ -16,8 +16,8 @@ header {visibility: hidden;}
 """
 st.markdown(esconder_menu, unsafe_allow_html=True)
 
-st.title("🎓 Assistente Virtual - Setor de Extensão")
-st.write("Olá! Sou o assistente da extensão. Pergunte-me sobre editais, horas e regulamentos.")
+st.title("🎓 Assistente Virtual - Setor de Estágios")
+st.write("Olá! Sou o assistente do departamento de estágios. Pergunte-me suas dúvidas.")
 
 # 2. Conectando a IA com a chave de segurança
 try:
