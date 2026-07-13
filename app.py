@@ -44,7 +44,7 @@ documento = carregar_pdf()
 
 # 4. Configurando as regras da IA
 modelo = genai.GenerativeModel(
-    model_name="models/gemini-1.5-flash",
+    model_name="gemini-1.5-flash",
     system_instruction=f"""Você é o assistente oficial do Setor de Extensão da Universidade. 
     Responda as dúvidas dos alunos baseando-se ESTRITAMENTE e APENAS no seguinte texto:
     ---
